@@ -6,12 +6,16 @@
 #include "levels.h"
 #include "drawFunctions.h"
 #include "enemyController.h"
+#include "turretController.h"
+#include "mouseController.h"
 
 using namespace sf;
 using namespace std;
 
 int windowWidth = 1280;
 int windowHeight = 720;
+
+
 
 int main()
 {
@@ -20,6 +24,13 @@ int main()
 	window.setFramerateLimit(60);
 	SetupLevels();
 	AddEnemy(1,0);
+
+	sf::Sprite levelSprite;
+	sf::Texture levelTexture;
+	if (!levelTexture.loadFromFile("Map_01.png")) {
+
+	}
+	levelSprite.setTexture(levelTexture);
 
 	while (window.isOpen())
 	{
@@ -32,6 +43,8 @@ int main()
 
 		window.clear();
 
+		window.draw(levelSprite);
+
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			AddEnemy(1,0);
 		}
@@ -40,10 +53,10 @@ int main()
 			DamageAllEnemies(1);
 		}
 
-		window.draw(DrawRectangle(Vector2f(32, 32), Vector2f(Mouse::getPosition(window).x,Mouse::getPosition(window).y), Color::Green));
-
 		DrawLevel(window);
 		UpdateEnemies(window);
+		UpdateTurrets(window);
+		UpdateMouse(window);
 
 		window.display();
 	}

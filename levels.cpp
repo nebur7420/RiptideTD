@@ -6,14 +6,26 @@ using namespace sf;
 
 vector<vector<Vector3f>> levelPathPoints;
 
+
 void SetupLevels() {
-	vector<Vector3f> level1 = {Vector3f(-1,10,1)
-		,Vector3f(10,10,2)
-		,Vector3f(10,15,3)
-		,Vector3f(5,15,0)
-		,Vector3f(5,5,1)
-		,Vector3f(15,5,2)
-		,Vector3f(15,24,2)};
+
+	vector<Vector3f> level1 = {Vector3f(-32,352,1)
+		,Vector3f(256,352,0)
+		,Vector3f(256,192,1)
+		,Vector3f(320,192,0)
+		,Vector3f(320,96,1)
+		,Vector3f(448,96,2)
+		,Vector3f(448,448,3)
+		,Vector3f(256,448,2)
+		,Vector3f(256,640,1)
+		,Vector3f(384,640,0)
+		,Vector3f(384,576,1)
+		,Vector3f(544,576,0)
+		,Vector3f(544,224,1)
+		,Vector3f(672,224,2)
+		,Vector3f(672,352,1)
+		,Vector3f(736,352,2)
+		,Vector3f(736,768,2)};
 
 	levelPathPoints.push_back(level1);
 }

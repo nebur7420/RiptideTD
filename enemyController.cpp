@@ -25,12 +25,12 @@ public:
 	}
 	void UpdatePosition() {
 		if (currentPoint < path.size()) {
-			int posX = position.x - path[currentPoint].x * 32;
-			int posY = position.y - path[currentPoint].y * 32;
+			int posX = position.x - path[currentPoint].x;
+			int posY = position.y - path[currentPoint].y;
 
 			if (posX > -speed && posX < speed && posY > -speed && posY < speed) {
 				velocity = Vector2f(0, 0);
-				position = Vector2f(path[currentPoint].x * 32, path[currentPoint].y * 32);
+				position = Vector2f(path[currentPoint].x, path[currentPoint].y);
 				currentPoint++;
 			}
 
@@ -59,11 +59,11 @@ public:
 	}
 	void DrawEnemy(RenderWindow& window) {
 		if (health < maxHealth) {
-			window.draw(DrawRectangle(Vector2f(30, 4), position - Vector2f(0, 12), Color(255, 0, 0, 255)));
-			window.draw(DrawRectangle(Vector2f(30 * health / maxHealth, 4), position - Vector2f(0, 12), Color(0, 255, 0, 255)));
+			window.draw(DrawRectangle(Vector2f(30, 4), position - Vector2f(16, 16+12), Color(255, 0, 0, 255)));
+			window.draw(DrawRectangle(Vector2f(30 * health / maxHealth, 4), position - Vector2f(16, 16+12), Color(0, 255, 0, 255)));
 		}
 
-		window.draw(DrawRectangle(Vector2f(30, 30), position, Color(255, 0, 0, 255), Color(255, 100, 100, 255), 2));
+		window.draw(DrawRectangle(Vector2f(30, 30), position - Vector2f(16,16), Color(255, 0, 0, 255), Color(255, 100, 100, 255), 2));
 	}
 	void DamageEnemy(int damageTaken) {
 		health -= damageTaken;
@@ -74,22 +74,25 @@ public:
 	int GetHealth() {
 		return health;
 	}
+	Vector2f GetPosition() {
+		return position;
+	}
 };
 
 vector<Enemy> Enemies;
 
 void AddEnemy(int enemyType, int levelId) {
-	Enemies.insert(Enemies.begin(), Enemy(10, 3, Vector2f(GetLevelInfo(levelId)[0].x*32, GetLevelInfo(levelId)[0].y*32), levelId));
+	Enemies.insert(Enemies.begin(), Enemy(10, 3, Vector2f(GetLevelInfo(levelId)[0].x, GetLevelInfo(levelId)[0].y), levelId));
 }
 
 void DamageAllEnemies(int DamageDealt) {
+	
 	if (!Enemies.empty()) {
-		for (int i = 0; i != Enemies.size(); i++) {
+		for (unsigned i = 0; i != Enemies.size(); i++) {
 			Enemies[i].DamageEnemy(DamageDealt);
-			if (Enemies[i].GetHealth() <= 0) {
-				Enemies.erase(Enemies.begin() + i);
-			}
 		}
+		auto End = std::remove_if(Enemies.begin(), Enemies.end(), [](Enemy e) { return e.GetHealth() <= 0; });
+		Enemies.erase(End, Enemies.end());
 	}
 }
 

@@ -15,22 +15,14 @@ using namespace std;
 int windowWidth = 1280;
 int windowHeight = 720;
 
-
-
 int main()
 {
 	RenderWindow window(VideoMode(windowWidth, windowHeight), "Riptide TD");
 	
 	window.setFramerateLimit(60);
 	SetupLevels();
+	LoadLevelTexture(1);
 	AddEnemy(1,0);
-
-	sf::Sprite levelSprite;
-	sf::Texture levelTexture;
-	if (!levelTexture.loadFromFile("Map_01.png")) {
-
-	}
-	levelSprite.setTexture(levelTexture);
 
 	while (window.isOpen())
 	{
@@ -43,7 +35,7 @@ int main()
 
 		window.clear();
 
-		window.draw(levelSprite);
+		//window.draw(levelSprite);
 
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			AddEnemy(1,0);

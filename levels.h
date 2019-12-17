@@ -9,5 +9,6 @@
 void SetupLevels();
 std::vector<sf::Vector3f> GetLevelInfo(int levelId);
 void DrawLevel(sf::RenderWindow& window);
+void LoadLevelTexture(int levelID);
 
 #endif

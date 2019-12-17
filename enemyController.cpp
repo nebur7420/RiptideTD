@@ -7,6 +7,7 @@ using namespace sf;
 
 class Enemy {
 private:
+
 	int maxHealth;
 	int health;
 	int speed;

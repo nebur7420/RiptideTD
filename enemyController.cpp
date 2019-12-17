@@ -7,7 +7,8 @@ using namespace sf;
 
 class Enemy {
 private:
-
+	Sprite enemySprite;
+	int enemyID;
 	int maxHealth;
 	int health;
 	int speed;
@@ -16,7 +17,8 @@ private:
 	vector<Vector3f> path;
 	int currentPoint = 1;
 public:
-	Enemy (int _health, int _speed, Vector2f _startPos, int levelId) {
+	Enemy (int _enemyID, int _health, int _speed, Vector2f _startPos, int levelId) {
+		enemyID = _enemyID;
 		maxHealth = _health;
 		health = maxHealth;
 		speed = _speed;
@@ -64,7 +66,10 @@ public:
 			window.draw(DrawRectangle(Vector2f(30 * health / maxHealth, 4), position - Vector2f(16, 16+12), Color(0, 255, 0, 255)));
 		}
 
-		window.draw(DrawRectangle(Vector2f(30, 30), position - Vector2f(16,16), Color(255, 0, 0, 255), Color(255, 100, 100, 255), 2));
+		//window.draw(DrawRectangle(Vector2f(30, 30), position - Vector2f(16,16), Color(255, 0, 0, 255), Color(255, 100, 100, 255), 2));
+		enemySprite.setTexture(LoadTexture("Sprites/Enemy_" + std::to_string(enemyID) + ".png"));
+		enemySprite.setPosition(position - Vector2f(16, 16));
+		window.draw(enemySprite);
 	}
 	void DamageEnemy(int damageTaken) {
 		health -= damageTaken;
@@ -83,7 +88,7 @@ public:
 vector<Enemy> Enemies;
 
 void AddEnemy(int enemyType, int levelId) {
-	Enemies.insert(Enemies.begin(), Enemy(10, 3, Vector2f(GetLevelInfo(levelId)[0].x, GetLevelInfo(levelId)[0].y), levelId));
+	Enemies.insert(Enemies.begin(), Enemy(0, 10, 3, Vector2f(GetLevelInfo(levelId)[0].x, GetLevelInfo(levelId)[0].y), levelId));
 }
 
 void DamageAllEnemies(int DamageDealt) {

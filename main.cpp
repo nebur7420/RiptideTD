@@ -18,10 +18,11 @@ int windowHeight = 720;
 int main()
 {
 	RenderWindow window(VideoMode(windowWidth, windowHeight), "Riptide TD");
-	
+	window.setMouseCursorVisible(false);
+	window.setMouseCursorGrabbed(true);
 	window.setFramerateLimit(60);
 	SetupLevels();
-	LoadLevelTexture(1);
+	SetupTextures();
 	AddEnemy(1,0);
 
 	while (window.isOpen())
@@ -35,14 +36,17 @@ int main()
 
 		window.clear();
 
-		//window.draw(levelSprite);
-
 		if (Keyboard::isKeyPressed(Keyboard::E)) {
 			AddEnemy(1,0);
 		}
 
 		if (Keyboard::isKeyPressed(Keyboard::R)) {
 			DamageAllEnemies(1);
+		}
+
+		if (Keyboard::isKeyPressed(Keyboard::Escape)) {
+			window.setMouseCursorGrabbed(false);
+			window.setMouseCursorVisible(true);
 		}
 
 		DrawLevel(window);

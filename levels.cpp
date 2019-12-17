@@ -5,9 +5,8 @@ using namespace std;
 using namespace sf;
 
 vector<vector<Vector3f>> levelPathPoints;
-
-sf::Sprite levelSprite;
-sf::Texture levelTexture;
+int currentLevel = 0;
+Sprite levelSprite;
 
 void SetupLevels() {
 
@@ -32,13 +31,6 @@ void SetupLevels() {
 	levelPathPoints.push_back(level1);
 }
 
-void LoadLevelTexture(int levelID) {
-	if (!levelTexture.loadFromFile("Map_1.png")) {
-
-	}
-	levelSprite.setTexture(levelTexture);
-}
-
 vector<Vector3f> GetLevelInfo(int levelId) {
 	if (!levelPathPoints.empty()) {
 		return levelPathPoints[levelId];
@@ -47,7 +39,8 @@ vector<Vector3f> GetLevelInfo(int levelId) {
 }
 
 void DrawLevel(RenderWindow& window) {
-
+	
+	levelSprite.setTexture(LoadTexture("Sprites/Map_" + std::to_string(currentLevel) + ".png"));
 	window.draw(levelSprite);
 
 	for (int ix = 0; ix < 40; ix++) {
